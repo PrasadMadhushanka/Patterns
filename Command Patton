@@ -1,0 +1,104 @@
+public class CommandPatternDemo {
+
+    // Command Interface
+    public interface Command {
+        void execute();
+    }
+
+    // Receiver Class
+    public static class TextFile {
+        private String name;
+
+        public TextFile(String name) {
+            this.name = name;
+        }
+
+        public void open() {
+            System.out.println("Opening file " + name);
+        }
+
+        public void save() {
+            System.out.println("Saving file " + name);
+        }
+
+        public void close() {
+            System.out.println("Closing file " + name);
+        }
+    }
+
+    // Concrete Command for opening a file
+    public static class OpenTextFileCommand implements Command {
+        private TextFile textFile;
+
+        public OpenTextFileCommand(TextFile textFile) {
+            this.textFile = textFile;
+        }
+
+        @Override
+        public void execute() {
+            textFile.open();
+        }
+    }
+
+    // Concrete Command for saving a file
+    public static class SaveTextFileCommand implements Command {
+        private TextFile textFile;
+
+        public SaveTextFileCommand(TextFile textFile) {
+            this.textFile = textFile;
+        }
+
+        @Override
+        public void execute() {
+            textFile.save();
+        }
+    }
+
+    // Concrete Command for closing a file
+    public static class CloseTextFileCommand implements Command {
+        private TextFile textFile;
+
+        public CloseTextFileCommand(TextFile textFile) {
+            this.textFile = textFile;
+        }
+
+        @Override
+        public void execute() {
+            textFile.close();
+        }
+    }
+
+    // Invoker Class
+    public static class FileInvoker {
+        private Command command;
+
+        public FileInvoker(Command command) {
+            this.command = command;
+        }
+
+        public void execute() {
+            this.command.execute();
+        }
+    }
+
+    // Main method to demonstrate the Command Pattern
+    public static void main(String[] args) {
+        // Create the receiver
+        TextFile textFile = new TextFile("document.txt");
+
+        // Create concrete commands
+        Command openCommand = new OpenTextFileCommand(textFile);
+        Command saveCommand = new SaveTextFileCommand(textFile);
+        Command closeCommand = new CloseTextFileCommand(textFile);
+
+        // Create invokers and execute commands
+        FileInvoker fileInvoker = new FileInvoker(openCommand);
+        fileInvoker.execute();
+
+        fileInvoker = new FileInvoker(saveCommand);
+        fileInvoker.execute();
+
+        fileInvoker = new FileInvoker(closeCommand);
+        fileInvoker.execute();
+    }
+}
