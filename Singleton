@@ -1,0 +1,37 @@
+public class Singleton {
+
+    // Private static variable of the same class that is the only instance of the class.
+    private static Singleton instance;
+
+    // Private constructor to restrict instantiation of the class from other classes.
+    private Singleton() {
+        // Initialization code here
+    }
+
+    // Public static method that returns the instance of the class.
+    public static Singleton getInstance() {
+        if (instance == null) {
+            instance = new Singleton();
+        }
+        return instance;
+    }
+
+    // Other methods and fields of the class
+    public void showMessage() {
+        System.out.println("Hello World from Singleton!");
+    }
+
+
+    public static void main(String[] args) {
+        // Get the only object available
+        Singleton singleton = Singleton.getInstance();
+
+        //Show the message
+        singleton.showMessage();
+        singleton.showMessage();
+
+    }
+}
+
+
+
